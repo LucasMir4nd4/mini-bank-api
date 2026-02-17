@@ -1,36 +1,55 @@
 package com.lucas.bank.mini_bank_api.domain.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import javax.annotation.processing.Generated;
-import java.util.Date;
+import java.time.LocalDateTime;
+
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(name = "customers",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "cpf"),
+                @UniqueConstraint(columnNames = "email")
+        })
 @Getter
 @Setter
-@Table(name = "customers")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String email;
-    private String cpf;
-    private String password;
-    private Date createdAt;
 
-    public Customer(String name, String email, String cpf, String password, Date createdAt) {
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false, length = 11)
+    private String cpf;
+
+    @Column(nullable = false)
+    private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
+
+
+    public Customer(String name, String cpf, String email, String password, LocalDateTime createdAt) {
         this.name = name;
-        this.email = email;
         this.cpf = cpf;
+        this.email = email;
         this.password = password;
         this.createdAt = createdAt;
     }
 }
+
