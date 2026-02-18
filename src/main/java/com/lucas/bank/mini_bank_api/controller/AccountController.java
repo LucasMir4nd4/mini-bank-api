@@ -1,11 +1,11 @@
 package com.lucas.bank.mini_bank_api.controller;
 
-import com.lucas.bank.mini_bank_api.domain.DTO.AccountDTO;
-import com.lucas.bank.mini_bank_api.domain.DTO.CustomerDTO;
+import com.lucas.bank.mini_bank_api.domain.DTO.AccountRequestDTO;
+import com.lucas.bank.mini_bank_api.domain.DTO.AccountResponseDTO;
+import com.lucas.bank.mini_bank_api.domain.DTO.CustomerRequestDTO;
+import com.lucas.bank.mini_bank_api.domain.DTO.CustomerResponseDTO;
 import com.lucas.bank.mini_bank_api.domain.entity.Account;
-import com.lucas.bank.mini_bank_api.domain.entity.Customer;
 import com.lucas.bank.mini_bank_api.service.AccountService;
-import com.lucas.bank.mini_bank_api.service.CustomerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +22,15 @@ public class AccountController {
     private final AccountService service;
 
     @PostMapping
-    public Account create(@RequestBody @Valid AccountDTO dto) {
-        return service.create(dto);
+    public AccountResponseDTO create(
+            @RequestBody @Valid AccountRequestDTO request
+    ) {
+        return service.create(request);
     }
 
+
     @GetMapping
-    public List<Account> findAll() {
+    public List<AccountResponseDTO> findAll() {
         return service.findAll();
     }
 

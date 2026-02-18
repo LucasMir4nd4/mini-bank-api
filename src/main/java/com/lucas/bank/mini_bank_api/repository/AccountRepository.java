@@ -1,5 +1,7 @@
 package com.lucas.bank.mini_bank_api.repository;
 
+import com.lucas.bank.mini_bank_api.domain.DTO.CustomerRequestDTO;
+import com.lucas.bank.mini_bank_api.domain.DTO.CustomerResponseDTO;
 import com.lucas.bank.mini_bank_api.domain.entity.Account;
 import org.jspecify.annotations.NullMarked;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,6 +18,8 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     Optional<Account> findById(Long aLong);
 
     Optional<Account> findByAccountNumber(String numberAccount);
+
+    Optional<Account> findByCustomer(CustomerResponseDTO customerDTO);
 
     boolean existsByAccountNumber(String numberAccount);
 }
