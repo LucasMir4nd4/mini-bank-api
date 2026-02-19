@@ -1,8 +1,11 @@
 package com.lucas.bank.mini_bank_api.domain.DTO;
 
+import com.lucas.bank.mini_bank_api.domain.entity.Account;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+
+import java.util.List;
 
 
 public record CustomerRequestDTO(

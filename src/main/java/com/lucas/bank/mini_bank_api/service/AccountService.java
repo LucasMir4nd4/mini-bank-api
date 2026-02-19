@@ -4,10 +4,14 @@ import com.lucas.bank.mini_bank_api.domain.DTO.AccountRequestDTO;
 import com.lucas.bank.mini_bank_api.domain.DTO.AccountResponseDTO;
 import com.lucas.bank.mini_bank_api.domain.DTO.CustomerIdDTO;
 import com.lucas.bank.mini_bank_api.domain.entity.Account;
+import com.lucas.bank.mini_bank_api.domain.entity.Customer;
 import com.lucas.bank.mini_bank_api.repository.AccountRepository;
+import com.lucas.bank.mini_bank_api.repository.CustomerRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.util.List;
 
 @Service
@@ -15,10 +19,30 @@ import java.util.List;
 public class AccountService {
 
     private final AccountRepository accountRepository;
+    private final CustomerRepository customerRepository;
 
-    // ==========================
-    // CONVERTER ENTITY -> RESPONSE
-    // ==========================
+    private final SecureRandom random = new SecureRandom();
+
+
+    private String generateAccountNumber() {
+        // 8 dígitos (10000000 a 99999999)
+        return String.valueOf(10_000_000 + random.nextInt(90_000_000));
+    }
+
+    private String generateUniqueAccountNumber() {
+        String number;
+        int attempts = 0;
+
+        do {
+            if (++attempts > 20) {
+                throw new IllegalStateException("Could not generate unique account number");
+            }
+            number = generateAccountNumber();
+        } while (accountRepository.existsByAccountNumber(number));
+
+        return number;
+    }
+
     private AccountResponseDTO toResponse(Account account) {
         return new AccountResponseDTO(
                 account.getId(),
@@ -29,19 +53,17 @@ public class AccountService {
                 new CustomerIdDTO(account.getCustomer().getId()));
     }
 
-    // ==========================
-    // CREATE
-    // ==========================
+    @Transactional
     public AccountResponseDTO create(AccountRequestDTO request) {
 
-        if (accountRepository.existsByAccountNumber(request.accountNumber())) {
-            throw new RuntimeException("Account number already exists");
-        }
+        Customer customer = customerRepository.findById(request.customerId())
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
 
         Account account = Account.builder()
-                .accountNumber(request.accountNumber())
-                .balance(request.balance())
+                .accountNumber(generateUniqueAccountNumber())
+                .balance(0.0)
                 .active(true)
+                .customer(customer)
                 .build();
 
         Account saved = accountRepository.save(account);
@@ -49,9 +71,7 @@ public class AccountService {
         return toResponse(saved);
     }
 
-    // ==========================
-    // FIND ALL
-    // ==========================
+
     public List<AccountResponseDTO> findAll() {
         return accountRepository.findAll()
                 .stream()

@@ -44,8 +44,7 @@ public class CustomerService {
                 customer.getName(),
                 customer.getCpf(),
                 customer.getEmail(),
-                customer.getCreatedAt(),
-                accounts
+                customer.getCreatedAt()
         );
     }
 

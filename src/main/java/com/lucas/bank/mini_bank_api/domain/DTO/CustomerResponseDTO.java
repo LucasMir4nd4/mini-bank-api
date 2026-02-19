@@ -8,7 +8,5 @@ public record CustomerResponseDTO(
         String name,
         String cpf,
         String email,
-        LocalDateTime createdAt,
-        List<AccountResponseDTO> accounts
-
+        LocalDateTime createdAt
 ){}
