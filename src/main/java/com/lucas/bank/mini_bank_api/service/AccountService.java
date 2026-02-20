@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.util.List;
 
@@ -61,7 +62,7 @@ public class AccountService {
 
         Account account = Account.builder()
                 .accountNumber(generateUniqueAccountNumber())
-                .balance(0.0)
+                .balance(BigDecimal.valueOf(0.0))
                 .active(true)
                 .customer(customer)
                 .build();

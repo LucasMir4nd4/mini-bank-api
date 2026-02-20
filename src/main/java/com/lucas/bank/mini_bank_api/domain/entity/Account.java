@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -25,8 +26,8 @@ public class Account {
     @Column(nullable = false, unique = true, length = 12)
     private String accountNumber;
 
-    @Column(nullable = false)
-    private Double balance;
+    @Column(nullable = false, precision = 19, scale = 2)
+    private BigDecimal balance;
 
     @Column(nullable = false)
     private Boolean active;
@@ -44,7 +45,7 @@ public class Account {
         this.createdAt = LocalDateTime.now();
     }
 
-    public Account(String accountNumber, Double balance,Boolean active, LocalDateTime createdAt) {
+    public Account(String accountNumber, BigDecimal balance,Boolean active, LocalDateTime createdAt) {
         this.accountNumber = accountNumber;
         this.balance = balance;
         this.createdAt = createdAt;

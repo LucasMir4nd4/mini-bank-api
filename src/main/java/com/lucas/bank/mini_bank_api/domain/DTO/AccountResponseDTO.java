@@ -1,9 +1,8 @@
 package com.lucas.bank.mini_bank_api.domain.DTO;
 
-import com.lucas.bank.mini_bank_api.domain.entity.Customer;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 
@@ -14,7 +13,7 @@ public record AccountResponseDTO(
         @NotBlank
         String accountNumber,
         @NotBlank
-        Double balance,
+        BigDecimal balance,
         @NotBlank
         Boolean active,
         @NotBlank

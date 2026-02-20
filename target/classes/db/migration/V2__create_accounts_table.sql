@@ -1,7 +1,7 @@
 CREATE TABLE accounts (
     id BIGSERIAL PRIMARY KEY,
     account_number VARCHAR(50) NOT NULL UNIQUE,
-    balance DOUBLE PRECISION NOT NULL,
+    balance NUMERIC(19,2) NOT NULL,
     active BOOLEAN NOT NULL,
     created_at TIMESTAMP NOT NULL,
 
