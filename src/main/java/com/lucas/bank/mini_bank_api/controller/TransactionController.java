@@ -5,6 +5,7 @@ import com.lucas.bank.mini_bank_api.domain.DTO.TransactionResponseDTO;
 import com.lucas.bank.mini_bank_api.domain.entity.Transaction;
 import com.lucas.bank.mini_bank_api.service.TransactionService;
 import jakarta.persistence.Access;
+import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -28,8 +29,9 @@ public class TransactionController {
     }
 
     @GetMapping
-    public List<Transaction> findAll() {
-        return ResponseEntity.ok(transactionService.findAll()).getBody();
+    public @Nullable List<TransactionResponseDTO> findAll() {
+        return transactionService.findAll();
     }
+
 
 }

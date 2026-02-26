@@ -83,7 +83,19 @@ public class TransactionService {
         }
     }
 
-    public List<Transaction> findAll() {
-        return transactionRepository.findAll();
+    TransactionResponseDTO toResponse(Transaction transaction) {
+        return new TransactionResponseDTO(
+                transaction.getId(),
+                transaction.getFromAccount().getId(),
+                transaction.getToAccount().getId(),
+                transaction.getAmount(),
+                transaction.getCreatedAt(),
+                transaction.getStatus().name()
+        );
+    }
+
+    public List<TransactionResponseDTO> findAll() {
+
+        return transactionRepository.findAll().stream().map(this::toResponse).toList();
     }
 }

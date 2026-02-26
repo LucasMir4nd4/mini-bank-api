@@ -10,6 +10,7 @@ import com.lucas.bank.mini_bank_api.repository.AccountRepository;
 import com.lucas.bank.mini_bank_api.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +25,9 @@ public class CustomerService {
 
     @Autowired
     private final AccountRepository accountRepository;
+
+    @Autowired
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private CustomerResponseDTO toResponse(Customer customer) {
 
@@ -62,11 +66,13 @@ public class CustomerService {
 
     public CustomerResponseDTO create(CustomerRequestDTO request) {
 
+        var password = bCryptPasswordEncoder.encode(request.password());
+
         Customer customer = Customer.builder()
                 .name(request.name())
                 .cpf(request.cpf())
                 .email(request.email())
-                .password(request.password())
+                .password(password)
                 .build();
 
         Customer saved = customerRepository.save(customer);
