@@ -1,6 +1,9 @@
 package com.lucas.bank.mini_bank_api.controller;
 
 import com.lucas.bank.mini_bank_api.domain.DTO.AuthDTO;
+import com.lucas.bank.mini_bank_api.domain.DTO.LoginResponseDTO;
+import com.lucas.bank.mini_bank_api.domain.entity.customer.CustomerDetails;
+import com.lucas.bank.mini_bank_api.security.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,19 +15,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("auth")
+@RequestMapping("/auth")
 public class AuthController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private TokenService tokenService;
+
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid AuthDTO authDTO){
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid AuthDTO authDTO){
 
-        var customerPassword = new UsernamePasswordAuthenticationToken(authDTO.cpf(), authDTO.password());
-        var auth = this.authenticationManager.authenticate(customerPassword);
 
-        return ResponseEntity.ok().build();
+        var authToken =
+                new UsernamePasswordAuthenticationToken(authDTO.cpf(), authDTO.password());
+
+        var authentication = this.authenticationManager.authenticate(authToken);
+
+        var principal = (CustomerDetails) authentication.getPrincipal();
+        var jwt = tokenService.generateToken(principal);
+
+        return ResponseEntity.ok(new LoginResponseDTO(jwt));
 
     }
 

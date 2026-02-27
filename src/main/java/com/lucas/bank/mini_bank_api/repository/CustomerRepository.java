@@ -1,12 +1,11 @@
 package com.lucas.bank.mini_bank_api.repository;
 
-import com.lucas.bank.mini_bank_api.domain.entity.Customer;
+import com.lucas.bank.mini_bank_api.domain.entity.customer.Customer;
 
 import org.jspecify.annotations.NullMarked;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository

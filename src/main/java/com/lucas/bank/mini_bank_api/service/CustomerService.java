@@ -5,14 +5,18 @@ import com.lucas.bank.mini_bank_api.domain.DTO.CustomerIdDTO;
 import com.lucas.bank.mini_bank_api.domain.DTO.CustomerRequestDTO;
 import com.lucas.bank.mini_bank_api.domain.DTO.CustomerResponseDTO;
 import com.lucas.bank.mini_bank_api.domain.entity.Account;
-import com.lucas.bank.mini_bank_api.domain.entity.Customer;
+import com.lucas.bank.mini_bank_api.domain.entity.customer.Customer;
 import com.lucas.bank.mini_bank_api.repository.AccountRepository;
 import com.lucas.bank.mini_bank_api.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
 

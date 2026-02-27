@@ -4,7 +4,7 @@ import com.lucas.bank.mini_bank_api.domain.DTO.AccountRequestDTO;
 import com.lucas.bank.mini_bank_api.domain.DTO.AccountResponseDTO;
 import com.lucas.bank.mini_bank_api.domain.DTO.CustomerIdDTO;
 import com.lucas.bank.mini_bank_api.domain.entity.Account;
-import com.lucas.bank.mini_bank_api.domain.entity.Customer;
+import com.lucas.bank.mini_bank_api.domain.entity.customer.Customer;
 import com.lucas.bank.mini_bank_api.repository.AccountRepository;
 import com.lucas.bank.mini_bank_api.repository.CustomerRepository;
 import jakarta.transaction.Transactional;

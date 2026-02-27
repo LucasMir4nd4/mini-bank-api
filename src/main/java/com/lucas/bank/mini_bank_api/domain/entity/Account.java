@@ -1,6 +1,7 @@
 package com.lucas.bank.mini_bank_api.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.lucas.bank.mini_bank_api.domain.entity.customer.Customer;
 import jakarta.persistence.*;
 import lombok.*;
 

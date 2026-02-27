@@ -1,13 +1,11 @@
-package com.lucas.bank.mini_bank_api.domain.entity;
+package com.lucas.bank.mini_bank_api.domain.entity.customer;
 
+import com.lucas.bank.mini_bank_api.domain.entity.Account;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 
